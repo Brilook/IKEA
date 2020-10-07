@@ -1,7 +1,5 @@
-'use strict';
-
 const generateSubcatalog = () => {
-  const subcatalog = `
+    const subcatalogHTML = `
     <div class="subcatalog">
         <button type="button" class="btn btn-return catalog-btn" aria-expanded="true" title="Закрыть меню"
             aria-label="Закрыть меню">
@@ -29,7 +27,7 @@ const generateSubcatalog = () => {
     </div>
     `;
 
-  document.body.insertAdjacentHTML('beforeend', subcatalog);
+    document.body.insertAdjacentHTML('beforeend', subcatalogHTML);
 };
 
-generateSubcatalog();
+export default generateSubcatalog;
