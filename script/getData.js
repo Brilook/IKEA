@@ -50,9 +50,10 @@ export const getData = {
   },
   catalog(callback) {
     this.get(data => {
-      const result = data.reduce((acc, item) => {
-        const catName = item[PARAM.cat];
-        if (!acc.includes(catName)) acc.push(catName);
+      const result = data.reduce((acc, {
+        category
+      }) => {
+        if (!acc.includes(category)) acc.push(category);
         return acc;
       }, []);
       callback(result);
@@ -61,8 +62,7 @@ export const getData = {
   subCatalog(value, callback) {
     this.get(data => {
       const result = data.reduce((acc, item) => {
-        const subCatName = item[PARAM.subcat];
-        if (!acc.includes(subCatName) && item[PARAM.cat] === value) acc.push(subCatName);
+        if (!acc.includes(item.subcategory) && item.category === value) acc.push(item.subcategory);
         return acc;
       }, []);
       callback(result);
