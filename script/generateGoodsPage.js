@@ -2,7 +2,8 @@ import {
   getData
 } from './getData.js'
 
-const wishList = []; //['idd012', 'idd086', 'idd052', 'idd021', 'idd011', 'idd001'];
+const wishList = ['idd012', 'idd086', 'idd052', 'idd021', 'idd011', 'idd001'];
+const COUNT = 6;
 
 const generateGoodsPage = () => {
 
@@ -10,38 +11,49 @@ const generateGoodsPage = () => {
   const goodList = document.querySelector('.goods-list');
 
   const generateCards = data => {
-    console.log(data);
     goodList.textContent = '';
-    if (data.length) {
 
-      data.forEach(item => {
-        goodList.insertAdjacentHTML('afterbegin', `<li class="goods-list__item">
-              <a class="goods-item__link" href="card.html#${item.id}">
+    if (!data.length) {
+      const goods = document.querySelector('.goods');
+      goods.textContent = '';
+      goods.textContent = location.search.includes('wishlist') ?
+        'Список желаний пуст' :
+        'По вашему запросу ничего не найдено';
+    };
+    data.forEach(item => {
+      const {
+        name,
+        id,
+        description,
+        price,
+        img,
+        count,
+      } = item;
+
+      goodList.insertAdjacentHTML('afterbegin', `
+            <li class="goods-list__item">
+              <a class="goods-item__link" href="card.html#${id}">
                 <article class="goods-item">
                   <div class="goods-item__img">
                     <img
-                      src="${item.img[0]}"
-                      data-second-image="${item.img[1]}"
-                      alt="${item.name}" >
+                      src="${img[0]}"
+                      data-second-image="${img[1]}"
+                      alt="${name}" >
                   </div>
-                  <p class="goods-item__new">Новинка</p>
-                  <h3 class="goods-item__header">${item.name}</h3>
-                  <p class="goods-item__description">${item.description}</p>
+                  ${count > COUNT ? '<p class="goods-item__new">Новинка</p>' : ''}
+                  ${!count ? '<p class="goods-item__new">Нет в наличии</p>' : ''}
+                  <h3 class="goods-item__header">${name}</h3>
+                  <p class="goods-item__description">${description}</p>
                   <p class="goods-item__price">
-                    <span class="goods-item__price-value">${item.price}</span>
+                    <span class="goods-item__price-value">${price}</span>
                     <span class="goods-item__currency"> ₽</span>
                   </p>
-                  <button class="btn btn-add-card" aria-label="Добравить в корзину" data-idd="idd001"></button>
+                  ${count ? `<button class="btn btn-add-card" aria-label="Добравить в корзину" data-idd="${id}"></button>` : ''}
                 </article>
               </a>
-            </li>`)
-      })
-    } else if (location.search.includes('wishlist')) {
-      goodList.insertAdjacentHTML('afterbegin', 'Список желаний пуст')
-
-    } else {
-      goodList.insertAdjacentHTML('afterbegin', 'По вашему запросу ничего не найдено')
-    }
+            </li>
+        `);
+    })
   }
 
   if (location.pathname.includes('goods') && location.search) {
