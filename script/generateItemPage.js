@@ -1,10 +1,10 @@
 import { getData } from './getData.js';
 import { NEWCOUNT } from './generateGoodsPage.js';
+import userData from './userData.js';
 
 const generateItemPage = () => {
 
   const renderCard = ({ category, count, description, id, img, name: itemName, subcategory, price }) => {
-
 
     const goodImages = document.querySelector('.good-images');
     const goodItemNew = document.querySelector('.good-item__new');
@@ -13,7 +13,14 @@ const generateItemPage = () => {
     const goodItemEmpty = document.querySelector('.good-item__empty');
     const goodItemPriceValue = document.querySelector('.good-item__price-value');
     const btnGood = document.querySelector('.btn-good');
-    const btnAddWshlist = document.querySelector('.btn-add-wishlist');
+    const btnAddWishlist = document.querySelector('.btn-add-wishlist');
+    const breadcrumbLinks = document.querySelectorAll('.breadcrumb__link');
+
+    breadcrumbLinks[0].textContent = category;
+    breadcrumbLinks[0].href = `goods.html?cat=${category}`;
+    breadcrumbLinks[1].textContent = subcategory;
+    breadcrumbLinks[1].href = `goods.html?subcat=${subcategory}`;
+    breadcrumbLinks[2].textContent = itemName;
 
     goodImages.textContent = '';
 
@@ -21,7 +28,7 @@ const generateItemPage = () => {
     goodItemDescription.textContent = description;
     goodItemPriceValue.textContent = price;
     btnGood.dataset.idd = id;
-    btnAddWshlist.dataset.idd = id;
+    btnAddWishlist.dataset.idd = id;
 
     img.forEach(item => {
       goodImages.insertAdjacentHTML('afterbegin', `
@@ -37,8 +44,26 @@ const generateItemPage = () => {
       goodItemEmpty.style.display = 'block';
       btnGood.style.display = 'none';
     }
-  };
 
+    const checkWishList = () => {
+      if (userData.wishList.includes(id)) {
+        btnAddWishlist.classList.add('contains-wishlist');
+      } else {
+        btnAddWishlist.classList.remove('contains-wishlist');
+      }
+    };
+
+    btnAddWishlist.addEventListener('click', () => {
+      userData.wishList = id;
+      checkWishList();
+    })
+
+    btnGood.addEventListener('click', () => {
+      userData.cartList = id;
+    })
+
+    checkWishList();
+  };
   if (location.hash && location.pathname.includes('card')) {
     getData.item(location.hash.substring(1), renderCard);
   }

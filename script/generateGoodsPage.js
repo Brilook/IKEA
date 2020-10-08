@@ -1,15 +1,16 @@
-import { getData } from './getData.js'
+import { getData } from './getData.js';
+import userData from './userData.js';
 
-const wishList = ['idd012', 'idd086', 'idd052', 'idd021', 'idd011', 'idd001'];
 export const NEWCOUNT = 6;
 
 const generateGoodsPage = () => {
 
   const mainHeader = document.querySelector('.main-header');
-  const goodList = document.querySelector('.goods-list');
 
   const generateCards = data => {
-    goodList.textContent = '';
+    const goodsList = document.querySelector('.goods-list');
+
+    goodsList.textContent = '';
 
     if (!data.length) {
       const goods = document.querySelector('.goods');
@@ -21,7 +22,7 @@ const generateGoodsPage = () => {
     data.forEach(item => {
       const { name, id, description, price, img, count } = item;
 
-      goodList.insertAdjacentHTML('afterbegin', `
+      goodsList.insertAdjacentHTML('afterbegin', `
             <li class="goods-list__item">
               <a class="goods-item__link" href="card.html#${id}">
                 <article class="goods-item">
@@ -45,7 +46,16 @@ const generateGoodsPage = () => {
             </li>
         `);
     })
-  }
+
+    goodsList.addEventListener('click', event => {
+      const btnAddCard = event.target.closest('.btn-add-card');
+      if (btnAddCard) {
+        event.preventDefault();
+        userData.cartList = btnAddCard.dataset.idd;
+      }
+    });
+
+  };
 
   if (location.pathname.includes('goods') && location.search) {
     const search = decodeURI(location.search);
@@ -55,13 +65,15 @@ const generateGoodsPage = () => {
       getData.search(value, generateCards);
       mainHeader.textContent = `Поиск: ${value}`;
     } else if (prop === 'wishlist') {
-      getData.wishList(wishList, generateCards);
+      getData.wishList(userData.wishList, generateCards);
       mainHeader.textContent = `Список желаний`;
     } else if (prop === 'cat' || prop === 'subcat') {
       getData.category(prop, value, generateCards);
       mainHeader.textContent = value;
     }
   }
+
+
 };
 
 export default generateGoodsPage;
