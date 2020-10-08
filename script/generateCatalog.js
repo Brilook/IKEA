@@ -1,9 +1,5 @@
-import {
-  getData
-} from './getData.js';
-import {
-  useCatalog
-} from './catalog.js';
+import { getData } from './getData.js';
+import { useCatalog } from './catalog.js';
 
 const generateCatalog = () => {
 

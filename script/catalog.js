@@ -1,7 +1,5 @@
 import generateSubcatalog from './generateSubcatalog.js';
-import {
-  getData
-} from './getData.js';
+import { getData } from './getData.js';
 
 
 
@@ -10,10 +8,8 @@ export const useCatalog = () => {
   const updateSubCatalog = generateSubcatalog();
   const btnBurger = document.querySelector('.btn-burger');
   const catalog = document.querySelector('.catalog');
-  // const btnClose = document.querySelector('.btn-close');
   const subcatalog = document.querySelector('.subcatalog');
   const subcatalogHeader = document.querySelector('.subcatalog-header');
-  // const btnReturn = document.querySelector('.btn-return');
 
   const overlay = document.createElement('div');
   overlay.classList.add('overlay');
@@ -43,19 +39,14 @@ export const useCatalog = () => {
     if (target.closest('.btn-close')) closeMenu();
   };
 
-  const closeSubMenu = () => {
-    subcatalog.classList.remove('subopen')
-
-  }
+  const closeSubMenu = () => subcatalog.classList.remove('subopen');
 
   btnBurger.addEventListener('click', openMenu);
-  // btnClose.addEventListener('click', closeMenu);
   overlay.addEventListener('click', closeMenu);
   catalog.addEventListener('click', hendlerCatalog);
   document.addEventListener('keydown', event => {
     if (event.code === 'Escape') closeMenu();
   });
-  // btnReturn.addEventListener('click', closeSubMenu);
   subcatalog.addEventListener('click', event => {
     const btnReturn = event.target.closest('.btn-return');
     if (btnReturn) closeSubMenu();

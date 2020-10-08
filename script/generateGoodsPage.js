@@ -1,9 +1,7 @@
-import {
-  getData
-} from './getData.js'
+import { getData } from './getData.js'
 
 const wishList = ['idd012', 'idd086', 'idd052', 'idd021', 'idd011', 'idd001'];
-const COUNT = 6;
+export const NEWCOUNT = 6;
 
 const generateGoodsPage = () => {
 
@@ -21,14 +19,7 @@ const generateGoodsPage = () => {
         'По вашему запросу ничего не найдено';
     };
     data.forEach(item => {
-      const {
-        name,
-        id,
-        description,
-        price,
-        img,
-        count,
-      } = item;
+      const { name, id, description, price, img, count } = item;
 
       goodList.insertAdjacentHTML('afterbegin', `
             <li class="goods-list__item">
@@ -40,7 +31,7 @@ const generateGoodsPage = () => {
                       data-second-image="${img[1]}"
                       alt="${name}" >
                   </div>
-                  ${count > COUNT ? '<p class="goods-item__new">Новинка</p>' : ''}
+                  ${count > NEWCOUNT ? '<p class="goods-item__new">Новинка</p>' : ''}
                   ${!count ? '<p class="goods-item__new">Нет в наличии</p>' : ''}
                   <h3 class="goods-item__header">${name}</h3>
                   <p class="goods-item__description">${description}</p>

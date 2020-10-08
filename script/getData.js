@@ -50,9 +50,7 @@ export const getData = {
   },
   catalog(callback) {
     this.get(data => {
-      const result = data.reduce((acc, {
-        category
-      }) => {
+      const result = data.reduce((acc, { category }) => {
         if (!acc.includes(category)) acc.push(category);
         return acc;
       }, []);

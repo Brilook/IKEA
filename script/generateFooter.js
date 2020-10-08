@@ -1,22 +1,20 @@
-import {
-  getData
-} from './getData.js';
+import { getData } from './getData.js';
 
 const generateFooter = () => {
 
-  getData.catalog(data => {
-    let catalogList = '';
+    getData.catalog(data => {
+        let catalogList = '';
 
-    data.forEach(item => {
-      catalogList += `
+        data.forEach(item => {
+            catalogList += `
             <li class="footer-list"> 
                 <a href="goods.html?cat=${item}">${item}</a>
             </li>
             `;
-    });
+        });
 
 
-    const footerHTML = ` 
+        const footerHTML = ` 
       <footer>
             <div class="container">
                 <div class="footer">
@@ -52,9 +50,9 @@ const generateFooter = () => {
         </footer>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', footerHTML);
+        document.body.insertAdjacentHTML('beforeend', footerHTML);
 
-  });
+    });
 };
 
 
