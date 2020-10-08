@@ -1,15 +1,15 @@
 'use strict';
 
-import generateCatalog from './generateCatalog.js';
-import generateFooter from './generateFooter.js';
-import generateGoodsPage from './generateGoodsPage.js';
-import generateItemPage from './generateItemPage.js';
 import generateHeader from './generateHeader.js';
-import { loadData } from './loadData.js';
+import generateCatalog from './generateCatalog.js';
+import generateItemPage from './generateItemPage.js';
+import generateGoodsPage from './generateGoodsPage.js';
+import genarateCartPage from './generateCartPage.js';
+import generateFooter from './generateFooter.js';
 
-generateCatalog();
-generateFooter();
 generateHeader();
-generateGoodsPage();
+generateCatalog();
 generateItemPage();
-loadData();
+generateGoodsPage();
+genarateCartPage();
+generateFooter();
