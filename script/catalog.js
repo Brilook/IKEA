@@ -1,10 +1,19 @@
+import generateSubcatalog from './generateSubcatalog.js';
+import {
+  getData
+} from './getData.js';
+
+
+
+
 export const useCatalog = () => {
+  const updateSubCatalog = generateSubcatalog();
   const btnBurger = document.querySelector('.btn-burger');
   const catalog = document.querySelector('.catalog');
-  const btnClose = document.querySelector('.btn-close');
+  // const btnClose = document.querySelector('.btn-close');
   const subcatalog = document.querySelector('.subcatalog');
   const subcatalogHeader = document.querySelector('.subcatalog-header');
-  const btnReturn = document.querySelector('.btn-return');
+  // const btnReturn = document.querySelector('.btn-return');
 
   const overlay = document.createElement('div');
   overlay.classList.add('overlay');
@@ -21,14 +30,17 @@ export const useCatalog = () => {
     closeSubMenu();
   };
 
-  const openSubMenu = event => {
+  const hendlerCatalog = event => {
     event.preventDefault();
     const target = event.target;
     const itemList = target.closest('.catalog-list__item');
     if (itemList) {
-      subcatalogHeader.innerHTML = itemList.innerHTML;
-      subcatalog.classList.add('subopen')
+      getData.subCatalog(target.textContent, data => {
+        updateSubCatalog(target.textContent, data);
+        subcatalog.classList.add('subopen');
+      });
     };
+    if (target.closest('.btn-close')) closeMenu();
   };
 
   const closeSubMenu = () => {
@@ -37,11 +49,15 @@ export const useCatalog = () => {
   }
 
   btnBurger.addEventListener('click', openMenu);
-  btnClose.addEventListener('click', closeMenu);
+  // btnClose.addEventListener('click', closeMenu);
   overlay.addEventListener('click', closeMenu);
-  catalog.addEventListener('click', openSubMenu);
+  catalog.addEventListener('click', hendlerCatalog);
   document.addEventListener('keydown', event => {
     if (event.code === 'Escape') closeMenu();
   });
-  btnReturn.addEventListener('click', closeSubMenu);
+  // btnReturn.addEventListener('click', closeSubMenu);
+  subcatalog.addEventListener('click', event => {
+    const btnReturn = event.target.closest('.btn-return');
+    if (btnReturn) closeSubMenu();
+  })
 }

@@ -1,12 +1,9 @@
 'use strict';
 
-import {
-  useCatalog
-} from './catalog.js';
 import generateCatalog from './generateCatalog.js';
 import generateFooter from './generateFooter.js';
+import generateGoodsPage from './generateGoodsPage.js';
 import generateHeader from './generateHeader.js';
-import generateSubcatalog from './generateSubcatalog.js';
 import {
   loadData
 } from './loadData.js';
@@ -14,6 +11,5 @@ import {
 generateCatalog();
 generateFooter();
 generateHeader();
-generateSubcatalog();
-useCatalog();
+generateGoodsPage();
 loadData();
