@@ -1,5 +1,35 @@
 import { getData } from './getData.js';
 import userData from './userData.js';
+import { sendData } from './fetch.js';
+
+const sendCart = () => {
+  const cartForm = document.querySelector('.cart-form');
+
+  cartForm.addEventListener('submit', event => {
+    event.preventDefault();
+
+    const formData = new FormData(cartForm);
+
+    // formData.set('order', JSON.stringify(userData.cartList)) // for the server working with FormData()
+    // sendData('https://jsonplaceholder.typicode.com/posts', formData)// for the server working with FormData()
+
+    const data = {};
+    for (const [key, value] of formData) {
+      data[key] = value;
+    }
+
+    data.order = userData.cartList;
+
+    sendData('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
+      .then(() => {
+        cartForm.reset();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  });
+
+}
 
 
 const genarateCartPage = () => {
@@ -87,6 +117,8 @@ const genarateCartPage = () => {
 
 
     getData.cart(userData.cartList, renderCartPage);
+
+    sendCart();
 
   }
 };
